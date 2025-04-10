@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const CORRECT_OTP = "123456";
+const CORRECT_OTP = "323473";
 
 export default function Home() {
 
