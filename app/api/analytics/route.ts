@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
   
     const weeklyTotals: Record<string, number> = {}
   
-    const entries = times.map((t) => {
+    const entries = times.map((t: any) => {
       const durationMs = new Date(t.end!).getTime() - new Date(t.start).getTime()
       const duration = Math.floor(durationMs / 60000)
   
