@@ -29,15 +29,16 @@ export async function GET(req: NextRequest) {
   
     const weeklyTotals: Record<string, number> = {}
   
-    const entries = times.map((t: any) => {
-      const durationMs = new Date(t.end!).getTime() - new Date(t.start).getTime()
+    const entries = times.map((t: unknown) => {
+      const time = t as { start: Date; end: Date; user: { name: string } }
+      const durationMs = new Date(time.end!).getTime() - new Date(time.start).getTime()
       const duration = Math.floor(durationMs / 60000)
   
-      weeklyTotals[t.user.name] = (weeklyTotals[t.user.name] || 0) + duration
+      weeklyTotals[time.user.name] = (weeklyTotals[time.user.name] || 0) + duration
   
       return {
-        user: t.user.name,
-        date: new Date(t.start).toLocaleDateString('de-DE'),
+        user: time.user.name,
+        date: new Date(time.start).toLocaleDateString('de-DE'),
         duration,
       }
     })
