@@ -5,12 +5,19 @@ import SelectPersonCard from '@/components/SelectPersonCard'
 import TimeCard from '@/components/TimeCard'
 import React, { useEffect, useState } from 'react'
 
+interface User {
+  id: number;
+  name: string;
+  email: string;
+}
+
 
 const TimeTracking = () => {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [seconds, setSeconds] = useState(0);
-
+  const [selectedUser, setSelectedUser] = useState<User | null>(null)
+  const [startTime, setStartTime] = useState<Date | null>(null)
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -26,8 +33,33 @@ const TimeTracking = () => {
     };
   }, [isPlaying]);
 
-  const toggleTimer = () => {
-    setIsPlaying((prev) => !prev)
+  const toggleTimer = async () => {
+
+    if (!selectedUser) {
+      alert('Please select a user first!');
+      return
+    }
+
+    if (!isPlaying) {
+      setStartTime(new Date())
+      setIsPlaying(true)
+    } else {
+      const endTime = new Date()
+
+      await fetch('/api/time', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          userId: selectedUser.id,
+          start: startTime,
+          end: endTime,
+        }),
+      })
+
+      setIsPlaying(false)
+      setStartTime(null)
+      setSeconds(0)
+    }
   }
 
   const formatTime = (sec: number) => {
@@ -53,7 +85,7 @@ const TimeTracking = () => {
                         time={formatTime(seconds)}/>
             </div>
             <div className='w-[30%]'>
-              <SelectPersonCard/>
+              <SelectPersonCard onSelect={setSelectedUser}/>
             </div>
         </div>
     </ProtectedRoute>
