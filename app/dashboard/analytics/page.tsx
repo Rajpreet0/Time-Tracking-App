@@ -7,6 +7,7 @@ import { Funnel } from 'lucide-react'
 import UserCard from '@/components/UserCard'
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table'
 import { useEffect, useState } from 'react'
+import CustomTooltip from '@/components/CustomTooltip'
 
 interface Entry {
   user: string
@@ -43,18 +44,20 @@ const Analytics = () => {
       <div className='flex flex-col items-center justify-center p-2 min-h-screen gap-8'>
         <div className='flex flex-col sm:flex-row items-center justify-between w-full max-w-2xl'>
           <h1 className='font-bold text-white text-3xl mb-2 sm:mb-0'>Analytics</h1>
-          <DropdownMenu>
-            <DropdownMenuTrigger className="focus:outline-0">
-              <div className="bg-[#0D0D0D] rounded-md border-gray-600 border-1 p-2 flex items-center justify-between cursor-pointer">
-                <Funnel size={16} color="#99a1af" />
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-[#1C1C1C] text-white border-none">
-              <DropdownMenuItem onClick={() => setFilter('day')} className='cursor-pointer'>Day</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setFilter('week')} className='cursor-pointer'>Week</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setFilter('month')} className='cursor-pointer'>Month</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <CustomTooltip content='Filter'>
+            <DropdownMenu>
+              <DropdownMenuTrigger className="focus:outline-0">
+                <div className="bg-[#0D0D0D] rounded-md border-gray-600 border-1 p-2 flex items-center justify-between cursor-pointer">
+                  <Funnel size={16} color="#99a1af" />
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="bg-[#1C1C1C] text-white border-none">
+                <DropdownMenuItem onClick={() => setFilter('day')} className='cursor-pointer'>Day</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setFilter('week')} className='cursor-pointer'>Week</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setFilter('month')} className='cursor-pointer'>Month</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </CustomTooltip>
         </div>
 
         <div className='w-full flex flex-col sm:flex-row items-center justify-center sm:justify-around gap-4 mt-6 max-w-2xl'>

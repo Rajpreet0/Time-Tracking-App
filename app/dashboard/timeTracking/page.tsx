@@ -1,4 +1,5 @@
 'use client'
+import CustomTooltip from '@/components/CustomTooltip'
 import Menu from '@/components/Navigation/Menu'
 import ProtectedRoute from '@/components/ProtectedRoute'
 import SelectPersonCard from '@/components/SelectPersonCard'
@@ -77,7 +78,9 @@ const TimeTracking = () => {
         <div className='flex flex-col items-center justify-center p-2 min-h-screen gap-8'>
             <div className='flex items-center justify-between w-[30%]'>
                 <h1 className='font-bold text-white text-3xl'>Dashboard</h1>
-                <p className='text-xl text-gray-300'>{new Date().toLocaleDateString("de-De", {  year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                <CustomTooltip content='Current Date'>
+                  <p className='text-xl text-gray-300'>{new Date().toLocaleDateString("de-De", {  year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                </CustomTooltip>
             </div>
             <div className='w-[30%]'>
               <TimeCard isPlay={isPlaying}             
